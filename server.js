@@ -1,15 +1,10 @@
 var express = require('express')
 var app = express();
+var RequestParserService = require('./request-parser-service');
+var requestParserService = new RequestParserService();
 
 app.get('/', function (req, res) {
-  var language = req.acceptsLanguages()[0];
-  var software = req.headers["user-agent"];
-  var ipaddress = req.connection.remoteAddress;
-  var result = {
-    "ipaddress": ipaddress,
-    "language": language,
-    "software": software
-  }
+  var result = requestParserService.parseRequest(req);
   res.send(result);
 })
 
